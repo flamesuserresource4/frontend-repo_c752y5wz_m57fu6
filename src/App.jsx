@@ -1,28 +1,37 @@
-import { useState } from 'react'
+import { useState } from "react";
+import AuthLayout from "./components/AuthLayout";
+import HeaderBrand from "./components/HeaderBrand";
+import LoginForm from "./components/LoginForm";
+import SocialSignIn from "./components/SocialSignIn";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [message, setMessage] = useState("");
+
+  const handleLogin = ({ email }) => {
+    setMessage(`Welcome back, ${email.split("@")[0]}!`);
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          Vibe Coding Platform
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Your AI-powered development environment
-        </p>
-        <div className="text-center">
-          <button
-            onClick={() => setCount(count + 1)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-          >
-            Count is {count}
-          </button>
+    <AuthLayout>
+      <div className="space-y-6">
+        <HeaderBrand />
+        <div>
+          <h1 className="text-2xl font-semibold text-gray-900">Sign in</h1>
+          <p className="mt-1 text-sm text-gray-600">Enter your details to access your account</p>
+        </div>
+        <LoginForm onSubmit={handleLogin} />
+        <SocialSignIn />
+        {message && (
+          <div className="rounded-lg bg-emerald-50 p-3 text-sm text-emerald-700 border border-emerald-200">
+            {message}
+          </div>
+        )}
+        <div className="text-sm text-gray-600">
+          By continuing you agree to our <a className="text-indigo-600 hover:underline" href="#">Terms</a> and <a className="text-indigo-600 hover:underline" href="#">Privacy Policy</a>.
         </div>
       </div>
-    </div>
-  )
+    </AuthLayout>
+  );
 }
 
-export default App
+export default App;
